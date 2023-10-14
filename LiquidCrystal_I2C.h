@@ -3,6 +3,7 @@
 
 #include <inttypes.h>
 #include <Print.h>
+#include <Wire.h>
 
 // commands
 #define LCD_CLEARDISPLAY 0x01
@@ -72,8 +73,9 @@ public:
 
 	/**
 	 * Set the LCD display in the correct begin state, must be called before anything else is done.
+	 * @param wire_p	Pointer to Wire object.
 	 */
-	void begin();
+	void begin(TwoWire* wire_p = &Wire);
 
 	 /**
 	  * Remove all the characters currently shown. Next print/write operation will start
@@ -152,6 +154,7 @@ private:
 	void write4bits(uint8_t);
 	void expanderWrite(uint8_t);
 	void pulseEnable(uint8_t);
+	TwoWire* _wire_p;                     /**< Wire object pointer*/
 	uint8_t _addr;
 	uint8_t _displayfunction;
 	uint8_t _displaycontrol;
